@@ -75,7 +75,7 @@ const FinancePage = () => {
             </p>
           </div>
 
-          {finances?.length === 0 && (
+          {!finances?.length && (
             <div className="mt-20 w-full">
               <div className="flex flex-col items-center gap-5">
                 <h1 className="text-center text-lg text-red-500">
