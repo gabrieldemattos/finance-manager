@@ -164,8 +164,7 @@ const FinanceTable = ({
               <TableCell className="border-r text-center font-bold 2md:hidden">
                 <p
                   data-expired={checkApplicationHasExpired(finance.endDate)}
-                  data-noEndDate={!finance.endDate}
-                  className="hidden items-center justify-center gap-2 data-[expired=true]:text-red-500 data-[noEndDate=true]:text-blue-500 2xl:flex"
+                  className="hidden items-center justify-center gap-2 data-[expired=null]:text-blue-500 data-[expired=true]:text-red-500 2xl:flex"
                 >
                   {finance.endDate && (
                     <Calendar className="h-4 w-4 text-gray-400" />
@@ -177,8 +176,7 @@ const FinanceTable = ({
 
                 <p
                   data-expired={checkApplicationHasExpired(finance.endDate)}
-                  data-noEndDate={!finance.endDate}
-                  className="flex items-center justify-center gap-2 data-[expired=true]:text-red-500 data-[noEndDate=true]:text-blue-500 2xl:hidden"
+                  className="flex items-center justify-center gap-2 data-[expired=null]:text-blue-500 data-[expired=true]:text-red-500 2xl:hidden"
                 >
                   {finance.endDate && (
                     <Calendar className="h-4 w-4 text-gray-400" />
