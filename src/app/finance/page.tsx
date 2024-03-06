@@ -131,16 +131,16 @@ const FinancePage = () => {
                     </Select>
                   </div>
 
-                  <div className="flex w-full items-center space-x-2 sm:w-auto">
-                    <Input
+                  <div className="relative flex w-full items-center sm:w-auto">
+                    <input
                       type="text"
                       placeholder="Buscar aplicação.."
-                      className="focus:border-transparent"
+                      className="h-full w-full rounded border border-gray-200 bg-white py-3 pl-11 pr-3 text-sm font-medium placeholder:text-gray-400 focus:outline-none"
                       onChange={(e) => setSearch(e.target.value)}
                     />
-                    <Button type="submit">
-                      <Search className="h-4 w-4" />
-                    </Button>
+                    <span className="absolute flex h-full items-center border-r bg-gray-100 px-2">
+                      <Search size={20} />
+                    </span>
                   </div>
                 </div>
 
