@@ -39,7 +39,7 @@ const Header = () => {
         height={0}
         priority={true}
         alt="logo gerenciador de finanças"
-        className="w-44 cursor-pointer"
+        className="w-16 cursor-pointer"
         onClick={backToHome}
       />
 
