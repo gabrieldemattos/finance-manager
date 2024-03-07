@@ -27,7 +27,7 @@ import {
 import { Finance } from "@prisma/client";
 import { Calendar, CircleDollarSign, Pencil, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { Dispatch, SetStateAction, useMemo } from "react";
+import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 
 interface FinanceTableProps {
@@ -41,15 +41,19 @@ const FinanceTable = ({
   updateFinances,
   filter = "empty",
 }: FinanceTableProps) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
   const handleEditFinance = async (id: string) => {
+    setIsLoading(true);
     return router.push(`/finance/details/${id}`);
   };
 
   const handleRemoveFinance = async (financeId: string) => {
+    setIsLoading(true);
     const excludeFinance = await deleteFinance(financeId);
 
     if (!excludeFinance) {
+      setIsLoading(false);
       return toast.error(
         "Ocorreu um erro ao remover os dados, tente novamente!",
         {
@@ -62,6 +66,7 @@ const FinanceTable = ({
       position: "bottom-center",
     });
 
+    setIsLoading(false);
     return updateFinances((prevFinances) =>
       prevFinances.filter((finance) => finance.id !== financeId),
     );
@@ -190,6 +195,7 @@ const FinanceTable = ({
 
               <TableCell className="flex items-center justify-center gap-3 border-r text-center 2md:flex-col">
                 <Button
+                  disabled={isLoading}
                   variant="default"
                   className="flex w-full gap-2"
                   onClick={() => handleEditFinance(finance.id)}
@@ -200,7 +206,11 @@ const FinanceTable = ({
 
                 <AlertDialog>
                   <AlertDialogTrigger asChild className="w-full">
-                    <Button variant="destructive" className="gap-2">
+                    <Button
+                      variant="destructive"
+                      className="gap-2"
+                      disabled={isLoading}
+                    >
                       <Trash className="h-4 w-4" />
                       <p className="capitalize">Remover</p>
                     </Button>
