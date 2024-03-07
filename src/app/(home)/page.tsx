@@ -32,7 +32,7 @@ export default function Home() {
       {status === "loading" && <Loading />}
       {status !== "loading" && status === "unauthenticated" && (
         <>
-          <div className="flex flex-col items-center gap-2">
+          <div className="flex flex-col items-center gap-2 px-4 text-center">
             <Image
               src="/logo.png"
               width={450}
@@ -45,7 +45,7 @@ export default function Home() {
           </div>
 
           <form
-            className="flex w-96 flex-col gap-8 rounded border-2 bg-white p-10 text-center shadow-xl md:w-[500px] md:p-12"
+            className="flex min-w-80 flex-col gap-8 rounded border-2 bg-white p-10 text-center shadow-xl md:w-[500px] md:p-12"
             onSubmit={handleSubmit}
           >
             <p className="text-base font-bold text-black">
