@@ -29,7 +29,7 @@ const ConfirmationPage = ({ params }: { params: { userId: string } }) => {
       return router.push("/");
     }
 
-    const response = await fetch("http://localhost:3000/api/finance/new", {
+    const response = await fetch("/api/finance/new", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

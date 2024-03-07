@@ -31,7 +31,7 @@ const FinancePage = () => {
     setIsLoading(true);
     const fetchFinances = async () => {
       const response = await fetch(
-        `http://localhost:3000/api/user/${(data?.user as any)?.id}/finances`,
+        `/api/user/${(data?.user as any)?.id}/finances`,
       );
 
       const json = await response.json();
