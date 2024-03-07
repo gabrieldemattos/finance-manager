@@ -37,7 +37,7 @@ const ConfirmationPage = ({ params }: { params: { userId: string } }) => {
       body: Buffer.from(
         JSON.stringify({
           userId: params.userId,
-          financeName: searchParams.get("financeName"),
+          financeName: searchParams.get("financeName")?.toLowerCase().trim(),
           startDate: searchParams.get("startDate"),
           endDate:
             searchParams.get("endDate") === "undefined"
