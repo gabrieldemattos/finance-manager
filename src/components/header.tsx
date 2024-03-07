@@ -34,7 +34,7 @@ const Header = () => {
   return (
     <div className="flex items-center justify-between border-b px-6 py-2 shadow lg:px-28 xl:px-48 2xl:px-72">
       <Image
-        src="/logo.png"
+        src="/logo-header.png"
         width={170}
         height={0}
         priority={true}
