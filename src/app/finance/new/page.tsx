@@ -251,24 +251,6 @@ const NewFinancePage = () => {
 
             <FormField
               control={form.control}
-              name="initialInvestment"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Aplicação inicial:</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Valor inicial aplicado"
-                      type="number"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
               name="currency"
               render={({ field }) => (
                 <FormItem>
@@ -288,6 +270,24 @@ const NewFinancePage = () => {
                       <SelectItem value="USD">Dólar</SelectItem>
                     </SelectContent>
                   </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="initialInvestment"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Aplicação inicial:</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Valor inicial aplicado"
+                      type="number"
+                      {...field}
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
