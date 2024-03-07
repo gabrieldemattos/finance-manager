@@ -15,7 +15,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 
 const FinancePage = () => {
@@ -136,7 +135,8 @@ const FinancePage = () => {
                       type="text"
                       placeholder="Buscar aplicação.."
                       className="h-full w-full rounded border border-gray-200 bg-white py-3 pl-11 pr-3 text-sm font-medium placeholder:text-gray-400 focus:outline-none"
-                      onChange={(e) => setSearch(e.target.value)}
+                      onChange={(e) => setSearch(e.target.value.toLowerCase())}
+                      value={search}
                     />
                     <span className="absolute flex h-full items-center border-r bg-gray-100 px-2">
                       <Search size={20} />
