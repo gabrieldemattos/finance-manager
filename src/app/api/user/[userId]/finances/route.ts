@@ -6,9 +6,9 @@ export async function GET(
   {
     params: { userId },
   }: {
-    params: { userId: string };
+    params: { userId?: string };
   },
-): Promise<NextResponse> {
+): Promise<void | NextResponse> {
   if (!userId) {
     return new NextResponse(JSON.stringify({ message: "Missing userId" }), {
       status: 400,
@@ -23,6 +23,12 @@ export async function GET(
       finances: true,
     },
   });
+
+  if (!user) {
+    return new NextResponse(JSON.stringify({ message: "User not found" }), {
+      status: 404,
+    });
+  }
 
   return new NextResponse(JSON.stringify(user), { status: 200 });
 }
