@@ -33,6 +33,16 @@ export async function POST(request: Request) {
     );
   }
 
+  if (Math.sign(initialInvestment) !== 1) {
+    return new NextResponse(
+      JSON.stringify({
+        error: {
+          code: "INVALID_INITIAL_INVESTMENT",
+        },
+      }),
+    );
+  }
+
   if (financeName.length > 15) {
     return new NextResponse(
       JSON.stringify({

@@ -58,6 +58,13 @@ const ConfirmationPage = ({ params }: { params: { userId: string } }) => {
       return setLoading(false);
     }
 
+    if (res?.error?.code === "INVALID_INITIAL_INVESTMENT") {
+      toast.error("Valor inicial deve ser maior que zero.", {
+        position: "bottom-center",
+      });
+      return setLoading(false);
+    }
+
     if (res?.error?.code === "DATABASE_ERROR") {
       toast.error("Ocorreu um erro ao conectar-se com o banco.", {
         position: "bottom-center",
