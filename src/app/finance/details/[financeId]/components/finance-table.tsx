@@ -127,7 +127,7 @@ const FinanceTable = ({
           </div>
 
           <div className="text-sm md:text-base">
-            <p>
+            <p className="word-break">
               Total (investido + rendimentos - resgastes):{" "}
               <span className="font-bold uppercase text-green-500">
                 {formatCurrency(
@@ -146,14 +146,16 @@ const FinanceTable = ({
           <div>
             <Accordion type="single" collapsible>
               <AccordionItem value="item-1">
-                <AccordionTrigger className="flex justify-between">
-                  <p>Rendimentos Registrados</p>
-                  <p>
-                    Total:{" "}
-                    <span className="font-bold text-green-500">
-                      {formatCurrency(totalProfit, finance.currency)}
-                    </span>
-                  </p>
+                <AccordionTrigger>
+                  <div className="flex flex-col items-start">
+                    <p>Rendimentos Registrados</p>
+                    <p>
+                      Total:{" "}
+                      <span className="font-bold text-green-500">
+                        {formatCurrency(totalProfit, finance.currency)}
+                      </span>
+                    </p>
+                  </div>
                 </AccordionTrigger>
                 {monthlyProfits.map((profit) => (
                   <Acordion
@@ -176,14 +178,16 @@ const FinanceTable = ({
           <div>
             <Accordion type="single" collapsible>
               <AccordionItem value="item-1">
-                <AccordionTrigger className="flex justify-between">
-                  <p>Resgates Registrados</p>
-                  <p>
-                    Total:{" "}
-                    <span className="font-bold text-red-500">
-                      {formatCurrency(totalWithdraw, finance.currency)}
-                    </span>
-                  </p>
+                <AccordionTrigger>
+                  <div className="flex flex-col items-start">
+                    <p>Resgates Registrados</p>
+                    <p>
+                      Total:{" "}
+                      <span className="font-bold text-red-500">
+                        {formatCurrency(totalWithdraw, finance.currency)}
+                      </span>
+                    </p>
+                  </div>
                 </AccordionTrigger>
                 {moneyWithdraw.map((rescue) => (
                   <Acordion
