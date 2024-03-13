@@ -46,7 +46,7 @@ const formSchema = z
       .max(15, {
         message: "O nome deve ter no máximo 15 caracteres",
       }),
-    initialInvestment: z.string().min(2, {
+    initialInvestment: z.string().min(1, {
       message: "Insira um valor inicial válido.",
     }),
     currency: z.string().min(1, {
@@ -283,6 +283,7 @@ const NewFinancePage = () => {
                   <FormLabel>Aplicação inicial:</FormLabel>
                   <FormControl>
                     <Input
+                      min={1}
                       placeholder="Valor inicial aplicado"
                       type="number"
                       {...field}
