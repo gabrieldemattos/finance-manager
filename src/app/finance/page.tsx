@@ -5,17 +5,20 @@ import { Finance } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import FinanceTable from "./new/components/finance-table";
+import FinanceCard from "./new/components/finance-card";
 import Loading from "../loading";
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Search } from "lucide-react";
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetFooter,
+  SheetHeader,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Filter, Search } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
+import { checkFilter, filters } from "./new/helpers/finance-filter";
+import Title from "@/components/title";
 
 const FinancePage = () => {
   const { data, status } = useSession();
@@ -24,7 +27,7 @@ const FinancePage = () => {
   const [finances, setFinances] = useState<Finance[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
-  const [filter, setFilter] = useState<string>("empty");
+  const [selectedFilter, setSelectedFilter] = useState<string>("empty");
 
   useEffect(() => {
     setIsLoading(true);
@@ -64,15 +67,10 @@ const FinancePage = () => {
     <div className="flex h-full flex-col items-center bg-gray-50 p-2 pt-16 xl:p-16">
       {!isLoading && data && (
         <>
-          <div className="flex flex-col items-center gap-2 px-5">
-            <p className="text-2xl font-bold">
-              Olá, {data?.user?.name?.split(" ")[0]}!
-            </p>
-            <p className="text-center text-lg text-gray-500 text-opacity-80">
-              Bem-vindo ao seu painel financeiro personalizado. Aqui você pode
-              acompanhar suas finanças de forma fácil e intuitiva.
-            </p>
-          </div>
+          <Title
+            title={`Olá, ${data?.user?.name?.split(" ")[0]}!`}
+            description="Bem-vindo ao seu painel financeiro personalizado. Aqui você pode acompanhar suas finanças de forma fácil e intuitiva."
+          />
 
           {!finances?.length && (
             <div className="mt-20 w-full">
@@ -88,70 +86,82 @@ const FinancePage = () => {
             Criar Novo Registro
           </Button>
 
-          <div className="mt-10 w-full px-0 md:px-0 lg:px-10 xl:px-2 2xl:px-36">
-            {finances?.length > 0 && (
-              <div className="flex h-[30.3125rem] flex-col md:h-[34.375rem]">
-                <div className="mb-5 flex flex-col gap-3 px-5 sm:flex-row sm:justify-between sm:px-2">
-                  <div className="flex items-center gap-1 sm:order-1 sm:w-auto">
-                    <p className="font-medium">Filtrar por:</p>
-                    <Select onValueChange={(value) => setFilter(value)}>
-                      <SelectTrigger className="w-[180px] text-left">
-                        <SelectValue placeholder="" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectItem value="recently-created">
-                            Mais recentes primeiro
-                          </SelectItem>
-                          <SelectItem value="old-to-new">
-                            Mais antigas primeiro
-                          </SelectItem>
-                          <SelectItem value="no-end-date">
-                            Sem data de vencimento
-                          </SelectItem>
-                          <SelectItem value="expiration-date-ascending">
-                            Ordem de vencimento crescente
-                          </SelectItem>
-                          <SelectItem value="expiration-date-descending">
-                            Ordem de vencimento decrescente
-                          </SelectItem>
-                          <SelectItem value="initial-investment-ascending">
-                            Ordem de aplicação inicial crescente
-                          </SelectItem>
-                          <SelectItem value="initial-investment-descending">
-                            Ordem de aplicação inicial decrescente
-                          </SelectItem>
-                          <SelectItem value="currency-euro">Euro</SelectItem>
-                          <SelectItem value="currency-real">Real</SelectItem>
-                          <SelectItem value="currency-dollar">Dólar</SelectItem>
-                          <SelectItem value="expired">Já vencidas</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </div>
+          {finances?.length > 0 && (
+            <div className="my-16 w-full px-1">
+              <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:justify-between">
+                <Sheet>
+                  <SheetTrigger className="flex items-center gap-1 sm:order-1">
+                    Filtrar Por <Filter />
+                  </SheetTrigger>
 
-                  <div className="relative flex w-full items-center sm:w-auto">
-                    <input
-                      type="text"
-                      placeholder="Buscar aplicação.."
-                      className="h-full w-full rounded border border-gray-200 bg-white py-3 pl-11 pr-3 text-sm font-medium placeholder:text-gray-400 focus:outline-none"
-                      onChange={(e) => setSearch(e.target.value.toLowerCase())}
-                      value={search}
-                    />
-                    <span className="absolute flex h-full items-center border-r bg-gray-100 px-2">
-                      <Search size={20} />
-                    </span>
-                  </div>
+                  <SheetContent side="left">
+                    <SheetHeader className="text-left text-lg font-semibold capitalize">
+                      Filtros
+                    </SheetHeader>
+
+                    <div className="mb-5 mt-2">
+                      <Separator />
+                    </div>
+
+                    <div className="mb-10 flex flex-col gap-4">
+                      {filters.map((filter) => (
+                        <SheetClose asChild key={filter.value}>
+                          <label
+                            data-value={selectedFilter === filter.value}
+                            className="flex cursor-pointer items-center gap-2 capitalize hover:underline data-[value=true]:font-bold"
+                          >
+                            <input
+                              type="checkbox"
+                              readOnly
+                              checked={selectedFilter === filter.value}
+                              onClick={() => setSelectedFilter(filter.value)}
+                            />
+                            {filter.label}
+                          </label>
+                        </SheetClose>
+                      ))}
+                    </div>
+
+                    <SheetFooter>
+                      <SheetClose asChild>
+                        <Button
+                          onClick={() => setSelectedFilter("")}
+                          className="w-full"
+                        >
+                          Limpar Filtro
+                        </Button>
+                      </SheetClose>
+                    </SheetFooter>
+                  </SheetContent>
+                </Sheet>
+
+                <div className="relative flex w-full sm:w-auto">
+                  <input
+                    type="text"
+                    placeholder="Buscar aplicação.."
+                    className="h-full w-full rounded border border-gray-200 bg-white py-3 pl-11 pr-3 text-sm font-medium placeholder:text-gray-400 focus:outline-none"
+                    onChange={(e) => setSearch(e.target.value.toLowerCase())}
+                    value={search}
+                  />
+                  <span className="absolute flex h-full items-center border-r bg-gray-100 px-2">
+                    <Search size={20} />
+                  </span>
                 </div>
-
-                <FinanceTable
-                  finances={filteredFinanceSearch}
-                  updateFinances={setFinances}
-                  filter={filter}
-                />
               </div>
-            )}
-          </div>
+
+              <div className="flex flex-col gap-5 md:grid md:grid-cols-2 2xl:grid-cols-3">
+                {checkFilter(filteredFinanceSearch, selectedFilter).map(
+                  (finance) => (
+                    <FinanceCard
+                      key={finance.id}
+                      updateFinances={setFinances}
+                      finance={finance}
+                    />
+                  ),
+                )}
+              </div>
+            </div>
+          )}
         </>
       )}
 
