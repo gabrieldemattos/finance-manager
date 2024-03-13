@@ -5,7 +5,7 @@ import { Finance } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import FinanceCard from "./new/components/finance-card";
+import FinanceCard from "./components/finance-card";
 import Loading from "../loading";
 import {
   Sheet,
@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/sheet";
 import { Filter, Search } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { checkFilter, filters } from "./new/helpers/finance-filter";
+import { checkFilter, filters } from "./helpers/finance-filter";
 import Title from "@/components/title";
 
 const FinancePage = () => {
