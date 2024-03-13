@@ -31,6 +31,20 @@ export const checkFilter = (finances: Finance[], filter: string) => {
           (a, b) =>
             new Date(b.endDate!).getTime() - new Date(a.endDate!).getTime(),
         );
+    case "expiration-initial-date-ascending":
+      return copyFinances
+        .filter((finance) => finance.startDate)
+        .toSorted(
+          (a, b) =>
+            new Date(a.startDate!).getTime() - new Date(b.startDate!).getTime(),
+        );
+    case "expiration-initial-date-descending":
+      return copyFinances
+        .filter((finance) => finance.startDate !== null)
+        .toSorted(
+          (a, b) =>
+            new Date(b.startDate!).getTime() - new Date(a.startDate!).getTime(),
+        );
     case "initial-investment-ascending":
       return copyFinances.toSorted(
         (a, b) => a.initialInvestment - b.initialInvestment,
@@ -71,19 +85,27 @@ export const filters = [
   },
   {
     value: "expiration-date-ascending",
-    label: "Ordem de vencimento crescente",
+    label: "Data de vencimento crescente",
   },
   {
     value: "expiration-date-descending",
-    label: "Ordem de vencimento decrescente",
+    label: "Data de vencimento decrescente",
+  },
+  {
+    value: "expiration-initial-date-ascending",
+    label: "Data de início crescente",
+  },
+  {
+    value: "expiration-initial-date-descending",
+    label: "Data de início decrescente",
   },
   {
     value: "initial-investment-ascending",
-    label: "Ordem de aplicação inicial crescente",
+    label: "Aplicação inicial crescente",
   },
   {
     value: "initial-investment-descending",
-    label: "Ordem de aplicação inicial decrescente",
+    label: "Aplicação inicial decrescente",
   },
   {
     value: "currency-euro",
