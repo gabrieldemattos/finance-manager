@@ -14,7 +14,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { formatDateString } from "@/utils/utils";
-import { X } from "lucide-react";
+import { Delete } from "lucide-react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
@@ -80,15 +80,15 @@ const Acordion = ({
 
   return (
     <>
-      <AccordionContent className="flex w-full items-center justify-between border-b px-5 py-2">
+      <AccordionContent className="flex w-full items-center justify-between border-b px-2 py-2">
         <div className="flex items-center gap-2">
           <AlertDialog>
             <AlertDialogTrigger
               disabled={isDeleting}
               data-deleting={isDeleting}
-              className="text-red-600 data-[deleting=true]:cursor-not-allowed data-[deleting=true]:text-gray-500"
+              className="text-red-800 data-[deleting=true]:cursor-not-allowed data-[deleting=true]:text-gray-500"
             >
-              <X className="w-4" />
+              <Delete className="w-4 rotate-180" />
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
