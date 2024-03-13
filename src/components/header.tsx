@@ -1,6 +1,6 @@
 "use client";
 
-import { BarChart3, DollarSignIcon, LogOut, PiggyBank } from "lucide-react";
+import { DollarSignIcon, LogOut, Wallet } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { useState } from "react";
@@ -32,7 +32,7 @@ const Header = () => {
   };
 
   return (
-    <div className="flex items-center justify-between border-b px-6 py-2 shadow lg:px-28 xl:px-48 2xl:px-72">
+    <div className="flex items-center justify-between border-b px-6 py-2 shadow lg:px-14 xl:px-20 2xl:px-32">
       <Image
         src="/logo-header.png"
         width={170}
@@ -80,18 +80,30 @@ const Header = () => {
                 </div>
 
                 <div className="flex flex-col gap-2 capitalize">
-                  <div className="flex cursor-pointer items-center gap-3 rounded-xl p-2 hover:bg-gray-100 hover:bg-opacity-90">
+                  <div
+                    className="flex cursor-pointer items-center gap-3 rounded-xl p-2 hover:bg-gray-100 hover:bg-opacity-90"
+                    onClick={() => router.push("/finance")}
+                  >
                     <DollarSignIcon
                       className="bg-gray rounded-full bg-gray-300 bg-opacity-50 p-2"
                       width={37}
                       height={37}
                     />
-                    <p
-                      className="font-semibold"
-                      onClick={() => router.push("/finance")}
-                    >
-                      minhas finanças
-                    </p>
+                    <p className="font-semibold">minhas finanças</p>
+                  </div>
+
+                  <div
+                    className="flex cursor-pointer items-center gap-3 rounded-xl p-2 hover:bg-gray-100 hover:bg-opacity-90"
+                    onClick={() =>
+                      router.push(`/my-wallet/${(data?.user as any)?.id}`)
+                    }
+                  >
+                    <Wallet
+                      className="bg-gray rounded-full bg-gray-300 bg-opacity-50 p-2"
+                      width={37}
+                      height={37}
+                    />
+                    <p className="font-semibold">minha carteira</p>
                   </div>
 
                   <div
